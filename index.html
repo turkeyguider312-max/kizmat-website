@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кызмат.kg — B2B-площадка для закупок стройматериалов в Кыргызстане</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2A4F;
+    --navy-2:#1E3A5F;
+    --red:#DC2626;
+    --red-dark:#B91C1C;
+    --gold:#F59E0B;
+    --ink:#0F172A;
+    --muted:#64748B;
+    --soft:#F8F9FB;
+    --soft-2:#F1F3F7;
+    --border:#E5E7EB;
+    --green:#10B981;
+    --bg:#FFFFFF;
+    --shadow:0 1px 2px rgba(15,42,79,.04), 0 8px 24px rgba(15,42,79,.06);
+    --shadow-lg:0 4px 12px rgba(15,42,79,.08), 0 16px 48px rgba(15,42,79,.10);
+    --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  img{max-width:100%;display:block}
+  .container{max-width:1240px;margin:0 auto;padding:0 24px}
+
+  /* ===== HEADER ===== */
+  header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:50}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:32px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Unbounded',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+  .logo-mark{width:38px;height:38px;border-radius:10px;background:var(--navy);display:grid;place-items:center;color:#fff;font-family:'Unbounded';font-weight:800;font-size:18px;position:relative}
+  .logo-mark::after{content:"";position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;background:var(--red);border-radius:50%;border:2px solid #fff}
+  .logo-sub{font-family:'Manrope';font-weight:600;font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;display:block}
+  .nav-links{display:flex;gap:28px;align-items:center;flex:1}
+  .nav-links a{font-weight:500;font-size:14px;color:#334155;transition:.15s}
+  .nav-links a:hover{color:var(--navy)}
+  .nav-actions{display:flex;gap:10px;align-items:center}
+  .lang-switch{display:flex;background:var(--soft-2);border-radius:8px;padding:3px;font-size:12px;font-weight:600}
+  .lang-switch button{padding:6px 10px;border-radius:6px;color:var(--muted)}
+  .lang-switch button.active{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;font-weight:600;font-size:14px;transition:.15s;border:1px solid transparent;white-space:nowrap}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy-2);transform:translateY(-1px)}
+  .btn-red{background:var(--red);color:#fff;padding:14px 22px;font-size:15px}
+  .btn-red:hover{background:var(--red-dark);transform:translateY(-1px)}
+  .btn-outline{background:#fff;border-color:var(--border);color:var(--ink)}
+  .btn-outline:hover{border-color:var(--navy);color:var(--navy)}
+  .btn-ghost{color:#475569}
+  .btn-ghost:hover{background:var(--soft-2)}
+
+  /* ===== HERO ===== */
+  .hero{padding:72px 0 64px;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,var(--soft) 100%)}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:24px;border:1px solid var(--border);box-shadow:var(--shadow)}
+  .eyebrow .dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:56px;line-height:1.05;letter-spacing:-.035em;margin-bottom:20px;color:var(--navy)}
+  h1 .accent{color:var(--red);position:relative;display:inline-block}
+  .lead{font-size:18px;color:#475569;margin-bottom:32px;max-width:540px;line-height:1.6}
+  .hero-ctas{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap}
+  .cta-card{display:flex;align-items:center;gap:14px;padding:16px 22px;border-radius:12px;border:2px solid var(--border);background:#fff;transition:.2s;cursor:pointer;text-align:left}
+  .cta-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .cta-card.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+  .cta-card.primary:hover{background:var(--navy-2)}
+  .cta-icon{width:42px;height:42px;border-radius:10px;background:var(--soft-2);display:grid;place-items:center;font-size:22px;flex-shrink:0}
+  .cta-card.primary .cta-icon{background:rgba(255,255,255,.15)}
+  .cta-text{display:flex;flex-direction:column;line-height:1.2}
+  .cta-text strong{font-weight:700;font-size:15px;display:block;margin-bottom:2px}
+  .cta-text span{font-size:12px;opacity:.7}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:24px;background:#fff;border-radius:14px;border:1px solid var(--border)}
+  .stat-num{font-family:'Unbounded';font-weight:800;font-size:28px;color:var(--navy);letter-spacing:-.03em;line-height:1}
+  .stat-label{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500}
+
+  /* Hero visual — tender card */
+  .hero-visual{position:relative;height:520px;display:flex;align-items:center;justify-content:center}
+  .tender-card{background:#fff;border-radius:16px;box-shadow:var(--shadow-lg);padding:24px;width:100%;max-width:380px;position:relative;border:1px solid var(--border)}
+  .tender-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+  .tender-id{font-family:'Unbounded';font-weight:600;font-size:11px;color:var(--muted);letter-spacing:.05em}
+  .tender-title{font-family:'Unbounded';font-weight:700;font-size:18px;color:var(--ink);margin-top:6px}
+  .tender-status{display:inline-flex;align-items:center;gap:6px;background:#FEF3C7;color:#92400E;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700}
+  .tender-status .dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+  .tender-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+  .tender-meta div{font-size:12px}
+  .tender-meta strong{display:block;color:var(--muted);font-weight:500;margin-bottom:3px}
+  .tender-meta span{font-weight:600;color:var(--ink)}
+  .bids-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+  .bid{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:var(--soft);margin-bottom:6px;transition:.15s}
+  .bid:hover{background:#EEF2F7}
+  .bid.best{background:#ECFDF5;border:1px solid #A7F3D0}
+  .bid-supplier{display:flex;align-items:center;gap:10px}
+  .bid-avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0}
+  .bid-info strong{display:block;font-size:13px;font-weight:600;margin-bottom:1px}
+  .bid-info span{font-size:11px;color:var(--muted)}
+  .bid-price{font-family:'Unbounded';font-weight:700;font-size:15px;color:var(--ink)}
+  .bid.best .bid-price{color:var(--green)}
+  .bid-badge{font-size:9px;font-weight:700;background:var(--green);color:#fff;padding:2px 6px;border-radius:4px;margin-left:6px;letter-spacing:.05em}
+
+  /* ===== SECTIONS ===== */
+  section{padding:88px 0}
+  .section-head{text-align:center;margin-bottom:56px;max-width:680px;margin-left:auto;margin-right:auto}
+  h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:40px;letter-spacing:-.025em;margin-bottom:16px;line-height:1.1;color:var(--navy)}
+  .section-head p{color:var(--muted);font-size:17px}
+
+  /* ===== CATEGORIES ===== */
+  .categories{background:var(--soft);border-radius:0}
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .cat{background:#fff;border-radius:12px;padding:22px 18px;border:1px solid var(--border);transition:.2s;cursor:pointer;text-align:center}
+  .cat:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--navy)}
+  .cat-icon{width:48px;height:48px;border-radius:12px;background:var(--soft-2);display:grid;place-items:center;margin:0 auto 14px;font-size:24px}
+  .cat h4{font-family:'Manrope';font-weight:700;font-size:14px;margin-bottom:4px;color:var(--ink)}
+  .cat p{font-size:11px;color:var(--muted);font-weight:500}
+
+  /* ===== HOW IT WORKS ===== */
+  .how-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:40px;background:var(--soft-2);padding:6px;border-radius:12px;max-width:480px;margin-left:auto;margin-right:auto}
+  .how-tab{padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;color:var(--muted);transition:.15s;flex:1}
+  .how-tab.active{background:#fff;color:var(--navy);box-shadow:var(--shadow)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  .step{position:relative;padding:32px;background:#fff;border-radius:16px;border:1px solid var(--border)}
+  .step-num{font-family:'Unbounded',sans-serif;font-weight:800;font-size:48px;color:var(--red);line-height:1;margin-bottom:18px;letter-spacing:-.04em;display:block}
+  .step h4{font-family:'Unbounded';font-weight:700;font-size:20px;margin-bottom:10px;color:var(--navy)}
+  .step p{color:var(--muted);font-size:14px;line-height:1.65}
+
+  /* ===== WHY ===== */
+  .why{background:var(--navy);color:#fff;padding:96px 0;position:relative;overflow:hidden}
+  .why::before{content:"";position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(220,38,38,.15) 0%,transparent 70%);}
+  .why h2{color:#fff}
+  .why .section-head p{color:rgba(255,255,255,.7)}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}
+  .why-item{padding:24px;background:rgba(255,255,255,.05);border-radius:14px;border:1px solid rgba(255,255,255,.1)}
+  .why-icon{width:48px;height:48px;border-radius:12px;background:var(--red);display:grid;place-items:center;margin-bottom:18px;font-size:22px}
+  .why-item h4{font-family:'Unbounded';font-weight:700;font-size:18px;margin-bottom:8px}
+  .why-item p{color:rgba(255,255,255,.7);font-size:14px;line-height:1.6}
+
+  /* ===== PRICING ===== */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+  .plan{background:#fff;border-radius:16px;padding:32px;border:2px solid var(--border);transition:.2s;position:relative;display:flex;flex-direction:column}
+  .plan:hover{border-color:var(--navy);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .plan.popular{border-color:var(--red);transform:scale(1.02)}
+  .plan.popular:hover{transform:scale(1.02) translateY(-3px)}
+  .plan.popular::before{content:"⚡ Самый популярный";position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:999px;letter-spacing:.04em;white-space:nowrap}
+  [data-lang="kg"] .plan.popular::before{content:"⚡ Эң популярдуу"}
+  .plan-name{font-family:'Unbounded';font-weight:700;font-size:20px;color:var(--navy);margin-bottom:6px}
+  .plan-desc{font-size:13px;color:var(--muted);margin-bottom:24px;min-height:36px}
+  .plan-price{font-family:'Unbounded';font-weight:800;font-size:42px;letter-spacing:-.03em;color:var(--ink);line-height:1;margin-bottom:6px}
+  .plan-price small{font-family:'Manrope';font-weight:500;font-size:14px;color:var(--muted);display:block;margin-top:6px}
+  .plan-divider{height:1px;background:var(--border);margin:24px 0}
+  .plan ul{list-style:none;font-size:14px;display:grid;gap:12px;flex:1;margin-bottom:24px}
+  .plan ul li{display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+  .plan ul li::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0;width:18px;height:18px;background:#ECFDF5;border-radius:50%;display:grid;place-items:center;font-size:11px;margin-top:1px}
+  .plan ul li.x::before{content:"×";color:var(--muted);background:transparent}
+  .plan ul li.x{color:var(--muted)}
+  .plan .btn{width:100%;justify-content:center}
+
+  .pricing-note{text-align:center;margin-top:32px;font-size:14px;color:var(--muted)}
+  .pricing-note strong{color:var(--ink);font-weight:600}
+
+  /* ===== FINAL CTA ===== */
+  .final-cta{background:linear-gradient(135deg,#FEE2E2 0%,#FEF3C7 100%);padding:80px 48px;border-radius:24px;text-align:center;margin:32px auto;max-width:1240px}
+  .final-cta h2{margin-bottom:14px}
+  .final-cta p{font-size:17px;color:#475569;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+  .final-cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+  /* ===== MODAL ===== */
+  .modal-overlay{position:fixed;inset:0;background:rgba(15,42,79,.6);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:36px}
+  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+  .modal h3{font-family:'Unbounded';font-weight:700;font-size:24px;color:var(--navy);letter-spacing:-.01em}
+  .modal-close{width:36px;height:36px;border-radius:50%;background:var(--soft-2);display:grid;place-items:center;font-size:20px;color:#666;transition:.15s}
+  .modal-close:hover{background:var(--border)}
+  .modal p.subtitle{color:var(--muted);font-size:15px;margin-bottom:28px}
+  .form-group{margin-bottom:16px}
+  .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#334155}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:15px;outline:none;transition:.15s;background:#fff;color:var(--ink)}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--navy)}
+  .form-group textarea{resize:vertical;min-height:100px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-submit{width:100%;padding:15px;background:var(--navy);color:#fff;border-radius:10px;font-weight:700;font-size:15px;margin-top:8px;transition:.15s}
+  .form-submit:hover{background:var(--navy-2)}
+  .form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.5}
+  .success{text-align:center;padding:20px 0}
+  .success-icon{width:80px;height:80px;background:#ECFDF5;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;font-size:40px}
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--ink);color:rgba(255,255,255,.7);padding:72px 0 32px;margin-top:64px}
+  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+  .footer-col h5{color:#fff;font-family:'Unbounded';font-weight:700;font-size:13px;margin-bottom:18px;letter-spacing:.06em;text-transform:uppercase}
+  .footer-col ul{list-style:none;display:grid;gap:10px;font-size:14px}
+  .footer-col a:hover{color:#fff}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:12px}
+  .footer-logo{color:#fff;margin-bottom:14px}
+  .footer-desc{font-size:14px;line-height:1.7;max-width:320px}
+
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:48px}
+    .hero-visual{height:auto}
+    h1{font-size:40px}
+    h2{font-size:30px}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr;gap:16px}
+    .why-grid{grid-template-columns:1fr;gap:16px}
+    .pricing-grid{grid-template-columns:1fr;gap:16px}
+    .plan.popular{transform:none}
+    .plan.popular:hover{transform:translateY(-3px)}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .nav-links{display:none}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .form-row{grid-template-columns:1fr}
+    .final-cta{padding:48px 24px}
+    section{padding:56px 0}
+  }
+</style>
+</head>
+<body data-lang="ru" data-role="customer">
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <span class="logo-mark">К</span>
+      <span>Кызмат<span style="color:var(--red)">.kg</span><span class="logo-sub" data-t="logo-sub">B2B-площадка</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#categories" data-t="nav-categories">Категории</a>
+      <a href="#how" data-t="nav-how">Как работает</a>
+      <a href="#pricing" data-t="nav-pricing">Тарифы</a>
+      <a href="#why" data-t="nav-why">Почему мы</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang-switch">
+        <button class="active" onclick="setLang('ru')">RU</button>
+        <button onclick="setLang('kg')">KG</button>
+      </div>
+      <button class="btn btn-ghost" onclick="openModal('login')" data-t="nav-login">Войти</button>
+      <button class="btn btn-navy" onclick="openModal('supplier')" data-t="nav-cta">Регистрация</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span data-t="hero-eyebrow">B2B-площадка для строительного рынка КР</span></span>
+        <h1 data-t="hero-title">Закупки <span class="accent">стройматериалов</span> без посредников</h1>
+        <p class="lead" data-t="hero-lead">Размещайте тендеры — получайте предложения от проверенных поставщиков по всему Кыргызстану. Прозрачно, быстро, выгодно.</p>
+
+        <div class="hero-ctas">
+          <button class="cta-card primary" onclick="openModal('request')">
+            <span class="cta-icon">🏗</span>
+            <span class="cta-text">
+              <strong data-t="hero-cta1-title">Я закупаю материалы</strong>
+              <span data-t="hero-cta1-sub">Бесплатно для заказчиков</span>
+            </span>
+          </button>
+          <button class="cta-card" onclick="openModal('supplier')">
+            <span class="cta-icon">📦</span>
+            <span class="cta-text">
+              <strong data-t="hero-cta2-title">Я поставщик</strong>
+              <span data-t="hero-cta2-sub">Получить тестовый доступ</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="stats">
+          <div>
+            <div class="stat-num">250+</div>
+            <div class="stat-label" data-t="stat-1">поставщиков</div>
+          </div>
+          <div>
+            <div class="stat-num">1 500+</div>
+            <div class="stat-label" data-t="stat-2">тендеров в месяц</div>
+          </div>
+          <div>
+            <div class="stat-num">10</div>
+            <div class="stat-label" data-t="stat-3">категорий</div>
+          </div>
+          <div>
+            <div class="stat-num">18%</div>
+            <div class="stat-label" data-t="stat-4">средняя экономия</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="tender-card">
+          <div class="tender-head">
+            <div>
+              <div class="tender-id">ТЕНДЕР № KZ-2026-0427</div>
+              <div class="tender-title" data-t="tender-title">Цемент М500, 500 мешков</div>
+            </div>
+            <span class="tender-status"><span class="dot"></span><span data-t="tender-status">Открыт</span></span>
+          </div>
+          <div class="tender-meta">
+            <div>
+              <strong data-t="tender-loc">Доставка</strong>
+              <span data-t="tender-loc-val">Бишкек, Чуйская обл.</span>
+            </div>
+            <div>
+              <strong data-t="tender-deadline">Срок</strong>
+              <span data-t="tender-deadline-val">До 30 июня</span>
+            </div>
+          </div>
+          <div class="bids-label" data-t="bids-label">3 ПРЕДЛОЖЕНИЯ</div>
+          <div class="bid best">
+            <div class="bid-supplier">
+              <div class="bid-avatar" style="background:#10B981">К</div>
+              <div class="bid-info">
+                <strong>КыргызЦемент <span class="bid-badge" data-t="bid-best">ЛУЧШИЙ</span></strong>
+                <span>★ 4.9 · 127 сделок</span>
+              </div>
+            </div>
+            <div class="bid-price">187 500 сом</div>
+          </div>
+          <div class="bid">
+            <div class="bid-supplier">
+              <div class="bid-avatar" style="background:#DC2626">С</div>
+              <div class="bid-info">
+                <strong>СтройОпт</strong>
+                <span>★ 4.7 · 84 сделки</span>
+              </div>
+            </div>
+            <div class="bid-price">195 000 сом</div>
+          </div>
+          <div class="bid">
+            <div class="bid-supplier">
+              <div class="bid-avatar" style="background:#F59E0B">Б</div>
+              <div class="bid-info">
+                <strong>Бишкек-Строй</strong>
+                <span>★ 4.8 · 212 сделок</span>
+              </div>
+            </div>
+            <div class="bid-price">202 000 сом</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories" class="categories">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-t="cat-title">10 категорий стройматериалов</h2>
+        <p data-t="cat-subtitle">От цемента и арматуры до отделки и инструментов — всё для строительства в одном месте</p>
+      </div>
+      <div class="cat-grid">
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🏗</div><h4 data-t="cat-1">Цемент и бетон</h4><p data-t="cat-1-sub">М400, М500, ЖБИ</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🔩</div><h4 data-t="cat-2">Металл и арматура</h4><p data-t="cat-2-sub">Прокат, профили</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🧱</div><h4 data-t="cat-3">Кирпич и блоки</h4><p data-t="cat-3-sub">Газоблок, керамика</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🎨</div><h4 data-t="cat-4">Отделка</h4><p data-t="cat-4-sub">Плитка, краска, обои</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🏠</div><h4 data-t="cat-5">Кровля</h4><p data-t="cat-5-sub">Профнастил, черепица</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🌡</div><h4 data-t="cat-6">Утепление</h4><p data-t="cat-6-sub">Минвата, пенопласт</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🚰</div><h4 data-t="cat-7">Сантехника</h4><p data-t="cat-7-sub">Трубы, фитинги</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">⚡</div><h4 data-t="cat-8">Электрика</h4><p data-t="cat-8-sub">Кабели, щиты</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🚪</div><h4 data-t="cat-9">Окна и двери</h4><p data-t="cat-9-sub">ПВХ, металл, дерево</p></div>
+        <div class="cat" onclick="openModal('request')"><div class="cat-icon">🛠</div><h4 data-t="cat-10">Инструменты</h4><p data-t="cat-10-sub">Электро, ручные</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-t="how-title">Как работает площадка</h2>
+        <p data-t="how-subtitle">Прозрачный тендерный процесс за 3 шага</p>
+      </div>
+
+      <div class="how-tabs">
+        <button class="how-tab active" onclick="switchTab('customer')" data-t="tab-customer">Для заказчиков</button>
+        <button class="how-tab" onclick="switchTab('supplier')" data-t="tab-supplier">Для поставщиков</button>
+      </div>
+
+      <div class="steps" id="steps-customer">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h4 data-t="step-c1-title">Создайте заявку</h4>
+          <p data-t="step-c1-desc">Опишите, что нужно: тип материала, объём, сроки, адрес доставки. Можно прикрепить смету или ТЗ. Бесплатно и без регистрации.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h4 data-t="step-c2-title">Получите предложения</h4>
+          <p data-t="step-c2-desc">В течение 24 часов поставщики присылают свои цены и сроки поставки. Сравните их в одной таблице — «коридор цен».</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h4 data-t="step-c3-title">Заключите сделку</h4>
+          <p data-t="step-c3-desc">Выберите лучшее предложение. Свяжитесь с поставщиком напрямую. Документы — счёт, договор, акт — оформляются через ЭДО.</p>
+        </div>
+      </div>
+
+      <div class="steps" id="steps-supplier" style="display:none">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h4 data-t="step-s1-title">Подключитесь</h4>
+          <p data-t="step-s1-desc">Зарегистрируйте компанию, выберите категории, в которых работаете. Первые 30 дней — бесплатно для тестирования.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h4 data-t="step-s2-title">Получайте заявки</h4>
+          <p data-t="step-s2-desc">Все новые тендеры по вашим категориям приходят в Telegram моментально. Аналитика «коридор цен» подскажет конкурентоспособную цену.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h4 data-t="step-s3-title">Выигрывайте тендеры</h4>
+          <p data-t="step-s3-desc">Предлагайте свои условия, общайтесь с заказчиками напрямую. Закрывайте сделки и получайте отзывы — растёт рейтинг и количество заказов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why" class="why">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-t="why-title">Почему компании выбирают нас</h2>
+        <p data-t="why-subtitle">Конкретные выгоды, которые получают наши клиенты</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon">💰</div>
+          <h4 data-t="why-1-title">Экономия 15-25%</h4>
+          <p data-t="why-1-desc">Конкуренция между поставщиками = лучшая цена. Видите «коридор цен» в реальном времени.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <h4 data-t="why-2-title">Скорость в 5 раз быстрее</h4>
+          <p data-t="why-2-desc">Вместо обзвона 10 поставщиков — одна заявка. Предложения приходят за 24 часа.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">✅</div>
+          <h4 data-t="why-3-title">Проверенные поставщики</h4>
+          <p data-t="why-3-desc">Каждый поставщик верифицирован: ОсОО/ИП, лицензии, отзывы по прошлым сделкам.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">📄</div>
+          <h4 data-t="why-4-title">ЭДО и отчётность</h4>
+          <p data-t="why-4-desc">Все документы — счета, договоры, акты — в одном месте. Готовая отчётность для бухгалтерии.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">📊</div>
+          <h4 data-t="why-5-title">Аналитика рынка</h4>
+          <p data-t="why-5-desc">История цен по категориям, динамика рынка, сравнение поставщиков. Принимайте решения на данных.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🤝</div>
+          <h4 data-t="why-6-title">Поддержка 7 дней</h4>
+          <p data-t="why-6-desc">Персональный менеджер для крупных клиентов. Помощь на русском и кыргызском языках.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-t="price-title">Тарифы для поставщиков</h2>
+        <p data-t="price-subtitle">Для заказчиков — всегда бесплатно. Поставщики платят за доступ к заявкам.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="plan">
+          <div class="plan-name" data-t="plan1-name">Старт</div>
+          <div class="plan-desc" data-t="plan1-desc">Для начинающих поставщиков и тестирования платформы</div>
+          <div class="plan-price">4 900<small data-t="per-month">сом / месяц</small></div>
+          <div class="plan-divider"></div>
+          <ul>
+            <li data-t="plan1-f1">До 30 заявок в месяц</li>
+            <li data-t="plan1-f2">1 категория товаров</li>
+            <li data-t="plan1-f3">Уведомления Telegram + SMS</li>
+            <li data-t="plan1-f4">Базовая аналитика цен</li>
+            <li class="x" data-t="plan1-f5">Без приоритета в листинге</li>
+            <li class="x" data-t="plan1-f6">Без личного менеджера</li>
+          </ul>
+          <button class="btn btn-outline" onclick="openModal('supplier')" data-t="plan-cta">Выбрать</button>
+        </div>
+
+        <div class="plan popular">
+          <div class="plan-name" data-t="plan2-name">Профи</div>
+          <div class="plan-desc" data-t="plan2-desc">Оптимальный выбор для большинства поставщиков</div>
+          <div class="plan-price">14 900<small data-t="per-month">сом / месяц</small></div>
+          <div class="plan-divider"></div>
+          <ul>
+            <li data-t="plan2-f1">Неограниченные заявки</li>
+            <li data-t="plan2-f2">До 3 категорий</li>
+            <li data-t="plan2-f3">Приоритет в листинге</li>
+            <li data-t="plan2-f4">Полная аналитика «коридор цен»</li>
+            <li data-t="plan2-f5">Значок «Проверенный поставщик»</li>
+            <li data-t="plan2-f6">Поддержка в рабочее время</li>
+          </ul>
+          <button class="btn btn-red" onclick="openModal('supplier')" data-t="plan-cta">Выбрать</button>
+        </div>
+
+        <div class="plan">
+          <div class="plan-name" data-t="plan3-name">Корпоративный</div>
+          <div class="plan-desc" data-t="plan3-desc">Для крупных производителей и оптовиков</div>
+          <div class="plan-price">39 900<small data-t="per-month">сом / месяц</small></div>
+          <div class="plan-divider"></div>
+          <ul>
+            <li data-t="plan3-f1">Всё из «Профи»</li>
+            <li data-t="plan3-f2">Все 10 категорий</li>
+            <li data-t="plan3-f3">Реклама в топе листинга</li>
+            <li data-t="plan3-f4">Персональный менеджер</li>
+            <li data-t="plan3-f5">API для интеграции с 1С</li>
+            <li data-t="plan3-f6">Обучение команды</li>
+          </ul>
+          <button class="btn btn-outline" onclick="openModal('supplier')" data-t="plan-cta">Выбрать</button>
+        </div>
+      </div>
+
+      <div class="pricing-note">
+        <strong data-t="price-trial">🎁 Первые 30 дней — бесплатно</strong> <span data-t="price-trial-sub">на любом тарифе. Без обязательств и привязки карты.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="container">
+    <div class="final-cta">
+      <h2 data-t="final-title">Готовы оптимизировать закупки?</h2>
+      <p data-t="final-desc">Присоединяйтесь к 250+ поставщикам и строительным компаниям, которые экономят время и деньги с Кызмат.kg</p>
+      <div class="final-cta-btns">
+        <button class="btn btn-red" onclick="openModal('request')">
+          <span data-t="final-cta1">Разместить заявку</span> →
+        </button>
+        <button class="btn btn-outline" onclick="openModal('supplier')">
+          <span data-t="final-cta2">Стать поставщиком</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="#" class="logo footer-logo">
+          <span class="logo-mark">К</span>
+          <span>Кызмат<span style="color:var(--red)">.kg</span></span>
+        </a>
+        <p class="footer-desc" data-t="footer-desc">B2B-площадка для закупок стройматериалов в Кыргызстане. Бишкек, Ош, Иссык-Куль и вся страна.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="footer-platform">Платформа</h5>
+        <ul>
+          <li><a href="#categories" data-t="nav-categories">Категории</a></li>
+          <li><a href="#how" data-t="nav-how">Как работает</a></li>
+          <li><a href="#pricing" data-t="nav-pricing">Тарифы</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="footer-company">Компания</h5>
+        <ul>
+          <li><a href="#" data-t="footer-about">О нас</a></li>
+          <li><a href="#" data-t="footer-blog">Блог</a></li>
+          <li><a href="#" data-t="footer-terms">Условия</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="footer-contact">Контакты</h5>
+        <ul>
+          <li>+996 700 123 456</li>
+          <li>sales@kizmat.kg</li>
+          <li>Бишкек, Кыргызстан</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Кызмат.kg — <span data-t="footer-rights">Все права защищены</span></div>
+      <div data-t="footer-made">Сделано в Бишкеке 🇰🇬</div>
+    </div>
+  </div>
+</footer>
+
+<!-- REQUEST MODAL (Customer creates tender) -->
+<div class="modal-overlay" id="modal-request">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 data-t="m-req-title">Разместить заявку</h3>
+        <p class="subtitle" data-t="m-req-subtitle">Поставщики получат вашу заявку моментально</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="submitRequest(event)">
+      <div class="form-group">
+        <label data-t="f-company">Название компании</label>
+        <input type="text" required placeholder="ОсОО «Стройдом»">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-t="f-inn">ИНН</label>
+          <input type="text" placeholder="01234567890123">
+        </div>
+        <div class="form-group">
+          <label data-t="f-contact">Контактное лицо</label>
+          <input type="text" required placeholder="Бакыт Маматов">
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-t="f-category">Категория материалов</label>
+        <select required>
+          <option data-t="cat-1">Цемент и бетон</option>
+          <option data-t="cat-2">Металл и арматура</option>
+          <option data-t="cat-3">Кирпич и блоки</option>
+          <option data-t="cat-4">Отделка</option>
+          <option data-t="cat-5">Кровля</option>
+          <option data-t="cat-6">Утепление</option>
+          <option data-t="cat-7">Сантехника</option>
+          <option data-t="cat-8">Электрика</option>
+          <option data-t="cat-9">Окна и двери</option>
+          <option data-t="cat-10">Инструменты</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-t="f-desc">Что именно нужно (наименование, объём)</label>
+        <textarea required placeholder="Цемент М500, 500 мешков по 50 кг. С доставкой на объект."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-t="f-delivery">Адрес доставки</label>
+          <input type="text" required placeholder="Бишкек, ул. Чуй 154">
+        </div>
+        <div class="form-group">
+          <label data-t="f-deadline">Срок поставки</label>
+          <input type="date" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-t="f-phone">Телефон для связи</label>
+        <input type="tel" required placeholder="+996 700 ...">
+      </div>
+      <button type="submit" class="form-submit" data-t="f-submit-req">Опубликовать тендер →</button>
+      <p class="form-note" data-t="f-note">Бесплатно для заказчиков. Предложения придут в течение 24 часов.</p>
+    </form>
+  </div>
+</div>
+
+<!-- SUPPLIER MODAL -->
+<div class="modal-overlay" id="modal-supplier">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 data-t="m-sup-title">Регистрация поставщика</h3>
+        <p class="subtitle" data-t="m-sup-subtitle">Бесплатный тестовый доступ на 30 дней</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="submitSupplier(event)">
+      <div class="form-group">
+        <label data-t="f-company">Название компании</label>
+        <input type="text" required placeholder="ОсОО «КыргызЦемент»">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-t="f-inn">ИНН</label>
+          <input type="text" required placeholder="01234567890123">
+        </div>
+        <div class="form-group">
+          <label data-t="f-contact">Контактное лицо</label>
+          <input type="text" required placeholder="Айбек Иманов">
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-t="f-position">Должность</label>
+        <input type="text" required placeholder="Менеджер по продажам">
+      </div>
+      <div class="form-group">
+        <label data-t="f-categories">Категории, в которых работаете</label>
+        <select required multiple size="4" style="height:auto">
+          <option data-t="cat-1">Цемент и бетон</option>
+          <option data-t="cat-2">Металл и арматура</option>
+          <option data-t="cat-3">Кирпич и блоки</option>
+          <option data-t="cat-4">Отделка</option>
+          <option data-t="cat-5">Кровля</option>
+          <option data-t="cat-6">Утепление</option>
+          <option data-t="cat-7">Сантехника</option>
+          <option data-t="cat-8">Электрика</option>
+          <option data-t="cat-9">Окна и двери</option>
+          <option data-t="cat-10">Инструменты</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-t="f-phone">Телефон</label>
+          <input type="tel" required placeholder="+996 700 ...">
+        </div>
+        <div class="form-group">
+          <label data-t="f-email">Email</label>
+          <input type="email" required placeholder="sales@company.kg">
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-t="f-plan">Тариф (после теста)</label>
+        <select required>
+          <option data-t="plan-opt-1">Старт — 4 900 сом/мес</option>
+          <option data-t="plan-opt-2" selected>Профи — 14 900 сом/мес (популярный)</option>
+          <option data-t="plan-opt-3">Корпоративный — 39 900 сом/мес</option>
+        </select>
+      </div>
+      <button type="submit" class="form-submit" data-t="f-submit-sup">Получить тестовый доступ →</button>
+      <p class="form-note" data-t="f-sup-note">30 дней бесплатно. Без обязательств и привязки карты. Менеджер свяжется в течение дня.</p>
+    </form>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 data-t="m-login-title">Вход в личный кабинет</h3>
+        <p class="subtitle" data-t="m-login-subtitle">Для заказчиков и поставщиков</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="submitRequest(event)">
+      <div class="form-group">
+        <label data-t="f-email">Email или телефон</label>
+        <input type="text" required placeholder="company@example.kg">
+      </div>
+      <div class="form-group">
+        <label data-t="f-password">Пароль</label>
+        <input type="password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="form-submit" data-t="f-login-submit">Войти →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ===== I18N =====
+  const i18n = {
+    ru:{
+      "logo-sub":"B2B-площадка",
+      "nav-categories":"Категории","nav-how":"Как работает","nav-pricing":"Тарифы","nav-why":"Почему мы","nav-login":"Войти","nav-cta":"Регистрация",
+      "hero-eyebrow":"B2B-площадка для строительного рынка КР",
+      "hero-title-html":'Закупки <span class="accent">стройматериалов</span> без посредников',
+      "hero-lead":"Размещайте тендеры — получайте предложения от проверенных поставщиков по всему Кыргызстану. Прозрачно, быстро, выгодно.",
+      "hero-cta1-title":"Я закупаю материалы","hero-cta1-sub":"Бесплатно для заказчиков",
+      "hero-cta2-title":"Я поставщик","hero-cta2-sub":"Получить тестовый доступ",
+      "stat-1":"поставщиков","stat-2":"тендеров в месяц","stat-3":"категорий","stat-4":"средняя экономия",
+      "tender-title":"Цемент М500, 500 мешков","tender-status":"Открыт","tender-loc":"Доставка","tender-loc-val":"Бишкек, Чуйская обл.","tender-deadline":"Срок","tender-deadline-val":"До 30 июня","bids-label":"3 ПРЕДЛОЖЕНИЯ","bid-best":"ЛУЧШИЙ",
+      "cat-title":"10 категорий стройматериалов","cat-subtitle":"От цемента и арматуры до отделки и инструментов — всё для строительства в одном месте",
+      "cat-1":"Цемент и бетон","cat-1-sub":"М400, М500, ЖБИ",
+      "cat-2":"Металл и арматура","cat-2-sub":"Прокат, профили",
+      "cat-3":"Кирпич и блоки","cat-3-sub":"Газоблок, керамика",
+      "cat-4":"Отделка","cat-4-sub":"Плитка, краска, обои",
+      "cat-5":"Кровля","cat-5-sub":"Профнастил, черепица",
+      "cat-6":"Утепление","cat-6-sub":"Минвата, пенопласт",
+      "cat-7":"Сантехника","cat-7-sub":"Трубы, фитинги",
+      "cat-8":"Электрика","cat-8-sub":"Кабели, щиты",
+      "cat-9":"Окна и двери","cat-9-sub":"ПВХ, металл, дерево",
+      "cat-10":"Инструменты","cat-10-sub":"Электро, ручные",
+      "how-title":"Как работает площадка","how-subtitle":"Прозрачный тендерный процесс за 3 шага",
+      "tab-customer":"Для заказчиков","tab-supplier":"Для поставщиков",
+      "step-c1-title":"Создайте заявку","step-c1-desc":"Опишите, что нужно: тип материала, объём, сроки, адрес доставки. Можно прикрепить смету или ТЗ. Бесплатно и без регистрации.",
+      "step-c2-title":"Получите предложения","step-c2-desc":"В течение 24 часов поставщики присылают свои цены и сроки поставки. Сравните их в одной таблице — «коридор цен».",
+      "step-c3-title":"Заключите сделку","step-c3-desc":"Выберите лучшее предложение. Свяжитесь с поставщиком напрямую. Документы — счёт, договор, акт — оформляются через ЭДО.",
+      "step-s1-title":"Подключитесь","step-s1-desc":"Зарегистрируйте компанию, выберите категории, в которых работаете. Первые 30 дней — бесплатно для тестирования.",
+      "step-s2-title":"Получайте заявки","step-s2-desc":"Все новые тендеры по вашим категориям приходят в Telegram моментально. Аналитика «коридор цен» подскажет конкурентоспособную цену.",
+      "step-s3-title":"Выигрывайте тендеры","step-s3-desc":"Предлагайте свои условия, общайтесь с заказчиками напрямую. Закрывайте сделки и получайте отзывы — растёт рейтинг и количество заказов.",
+      "why-title":"Почему компании выбирают нас","why-subtitle":"Конкретные выгоды, которые получают наши клиенты",
+      "why-1-title":"Экономия 15-25%","why-1-desc":"Конкуренция между поставщиками = лучшая цена. Видите «коридор цен» в реальном времени.",
+      "why-2-title":"Скорость в 5 раз быстрее","why-2-desc":"Вместо обзвона 10 поставщиков — одна заявка. Предложения приходят за 24 часа.",
+      "why-3-title":"Проверенные поставщики","why-3-desc":"Каждый поставщик верифицирован: ОсОО/ИП, лицензии, отзывы по прошлым сделкам.",
+      "why-4-title":"ЭДО и отчётность","why-4-desc":"Все документы — счета, договоры, акты — в одном месте. Готовая отчётность для бухгалтерии.",
+      "why-5-title":"Аналитика рынка","why-5-desc":"История цен по категориям, динамика рынка, сравнение поставщиков. Принимайте решения на данных.",
+      "why-6-title":"Поддержка 7 дней","why-6-desc":"Персональный менеджер для крупных клиентов. Помощь на русском и кыргызском языках.",
+      "price-title":"Тарифы для поставщиков","price-subtitle":"Для заказчиков — всегда бесплатно. Поставщики платят за доступ к заявкам.",
+      "plan1-name":"Старт","plan1-desc":"Для начинающих поставщиков и тестирования платформы",
+      "plan1-f1":"До 30 заявок в месяц","plan1-f2":"1 категория товаров","plan1-f3":"Уведомления Telegram + SMS","plan1-f4":"Базовая аналитика цен","plan1-f5":"Без приоритета в листинге","plan1-f6":"Без личного менеджера",
+      "plan2-name":"Профи","plan2-desc":"Оптимальный выбор для большинства поставщиков",
+      "plan2-f1":"Неограниченные заявки","plan2-f2":"До 3 категорий","plan2-f3":"Приоритет в листинге","plan2-f4":"Полная аналитика «коридор цен»","plan2-f5":"Значок «Проверенный поставщик»","plan2-f6":"Поддержка в рабочее время",
+      "plan3-name":"Корпоративный","plan3-desc":"Для крупных производителей и оптовиков",
+      "plan3-f1":"Всё из «Профи»","plan3-f2":"Все 10 категорий","plan3-f3":"Реклама в топе листинга","plan3-f4":"Персональный менеджер","plan3-f5":"API для интеграции с 1С","plan3-f6":"Обучение команды",
+      "per-month":"сом / месяц","plan-cta":"Выбрать",
+      "price-trial":"🎁 Первые 30 дней — бесплатно","price-trial-sub":"на любом тарифе. Без обязательств и привязки карты.",
+      "final-title":"Готовы оптимизировать закупки?","final-desc":"Присоединяйтесь к 250+ поставщикам и строительным компаниям, которые экономят время и деньги с Кызмат.kg",
+      "final-cta1":"Разместить заявку","final-cta2":"Стать поставщиком",
+      "m-req-title":"Разместить заявку","m-req-subtitle":"Поставщики получат вашу заявку моментально",
+      "m-sup-title":"Регистрация поставщика","m-sup-subtitle":"Бесплатный тестовый доступ на 30 дней",
+      "m-login-title":"Вход в личный кабинет","m-login-subtitle":"Для заказчиков и поставщиков",
+      "f-company":"Название компании","f-inn":"ИНН","f-contact":"Контактное лицо","f-position":"Должность","f-category":"Категория материалов","f-categories":"Категории, в которых работаете","f-desc":"Что именно нужно (наименование, объём)","f-delivery":"Адрес доставки","f-deadline":"Срок поставки","f-phone":"Телефон","f-email":"Email","f-password":"Пароль","f-plan":"Тариф (после теста)",
+      "plan-opt-1":"Старт — 4 900 сом/мес","plan-opt-2":"Профи — 14 900 сом/мес (популярный)","plan-opt-3":"Корпоративный — 39 900 сом/мес",
+      "f-submit-req":"Опубликовать тендер →","f-note":"Бесплатно для заказчиков. Предложения придут в течение 24 часов.",
+      "f-submit-sup":"Получить тестовый доступ →","f-sup-note":"30 дней бесплатно. Без обязательств и привязки карты. Менеджер свяжется в течение дня.",
+      "f-login-submit":"Войти →",
+      "footer-desc":"B2B-площадка для закупок стройматериалов в Кыргызстане. Бишкек, Ош, Иссык-Куль и вся страна.",
+      "footer-platform":"Платформа","footer-company":"Компания","footer-contact":"Контакты",
+      "footer-about":"О нас","footer-blog":"Блог","footer-terms":"Условия",
+      "footer-rights":"Все права защищены","footer-made":"Сделано в Бишкеке 🇰🇬",
+      "success-title":"Заявка опубликована!","success-msg":"Поставщики уже получили вашу заявку. Предложения придут в течение 24 часов в Telegram и на email.",
+      "success-sup-title":"Заявка получена!","success-sup-msg":"Наш менеджер свяжется с вами в течение дня для активации тестового периода.",
+      "success-btn":"Хорошо"
+    },
+    kg:{
+      "logo-sub":"B2B-аянтча",
+      "nav-categories":"Категориялар","nav-how":"Кантип иштейт","nav-pricing":"Тарифтер","nav-why":"Эмне үчүн биз","nav-login":"Кирүү","nav-cta":"Катталуу",
+      "hero-eyebrow":"КРнин курулуш базары үчүн B2B-аянтча",
+      "hero-title-html":'<span class="accent">Курулуш материалдарын</span> ортомчусуз сатып алуу',
+      "hero-lead":"Тендерлерди жайгаштырыңыз — Кыргызстандын текшерилген жөнөтүүчүлөрүнөн сунуштарды алыңыз. Ачык, тез, пайдалуу.",
+      "hero-cta1-title":"Мен материал сатып алам","hero-cta1-sub":"Заказчылар үчүн акысыз",
+      "hero-cta2-title":"Мен жөнөтүүчүмүн","hero-cta2-sub":"Сыноо мүмкүнчүлүгүн алуу",
+      "stat-1":"жөнөтүүчү","stat-2":"тендер айына","stat-3":"категория","stat-4":"орточо үнөмдөө",
+      "tender-title":"Цемент М500, 500 мүшөк","tender-status":"Ачык","tender-loc":"Жеткирүү","tender-loc-val":"Бишкек, Чүй обл.","tender-deadline":"Мөөнөт","tender-deadline-val":"30-июнга чейин","bids-label":"3 СУНУШ","bid-best":"ЭҢ МЫКТЫ",
+      "cat-title":"Курулуш материалдарынын 10 категориясы","cat-subtitle":"Цементтен жана арматурадан баштап жасалгага жана аспаптарга чейин — бардыгы бир жерде",
+      "cat-1":"Цемент жана бетон","cat-1-sub":"М400, М500, ЖБИ",
+      "cat-2":"Металл жана арматура","cat-2-sub":"Прокат, профилдер",
+      "cat-3":"Кирпич жана блоктор","cat-3-sub":"Газоблок, керамика",
+      "cat-4":"Жасалга","cat-4-sub":"Плитка, боёк, тапеттер",
+      "cat-5":"Чатыр","cat-5-sub":"Профнастил, черепица",
+      "cat-6":"Жылуулоо","cat-6-sub":"Минвата, пенопласт",
+      "cat-7":"Сантехника","cat-7-sub":"Түтүктөр, фитингдер",
+      "cat-8":"Электр","cat-8-sub":"Кабелдер, щиттер",
+      "cat-9":"Терезе жана эшик","cat-9-sub":"ПВХ, металл, жыгач",
+      "cat-10":"Аспаптар","cat-10-sub":"Электр, кол",
+      "how-title":"Аянтча кантип иштейт","how-subtitle":"3 кадамда ачык тендердик процесс",
+      "tab-customer":"Заказчылар үчүн","tab-supplier":"Жөнөтүүчүлөр үчүн",
+      "step-c1-title":"Арыз түзүңүз","step-c1-desc":"Эмне керектигин жазыңыз: материалдын түрү, көлөмү, мөөнөтү, жеткирүү дареги. Сметаны же ТЗни тиркесе болот. Акысыз жана катталуусуз.",
+      "step-c2-title":"Сунуштарды алыңыз","step-c2-desc":"24 сааттын ичинде жөнөтүүчүлөр өз баасын жана жеткирүү мөөнөтүн жөнөтөт. Бир таблицада салыштырыңыз — «баа коридору».",
+      "step-c3-title":"Келишимди түзүңүз","step-c3-desc":"Эң мыкты сунушту тандаңыз. Жөнөтүүчү менен түз байланышыңыз. Документтер — эсеп, келишим, акт — ЭДО аркылуу.",
+      "step-s1-title":"Кошулуңуз","step-s1-desc":"Компанияңызды каттаңыз, иштеген категорияларыңызды тандаңыз. Биринчи 30 күн — текшерүү үчүн акысыз.",
+      "step-s2-title":"Арыздарды алыңыз","step-s2-desc":"Сиздин категорияларыңыз боюнча бардык жаңы тендерлер Telegramга заматта келет. «Баа коридору» аналитикасы атаандаш баа сунуш кылууга жардам берет.",
+      "step-s3-title":"Тендерлерди утуңуз","step-s3-desc":"Өз шарттарыңызды сунуштаңыз, заказчылар менен түз сүйлөшүңүз. Келишимдерди жабыңыз жана пикирлерди алыңыз — рейтингиңиз жана буйрутмалардын саны өсөт.",
+      "why-title":"Эмне үчүн компаниялар бизди тандайт","why-subtitle":"Биздин кардарлар алган конкреттүү пайдалар",
+      "why-1-title":"15-25% үнөмдөө","why-1-desc":"Жөнөтүүчүлөрдүн ортосундагы атаандаштык = эң мыкты баа. «Баа коридорун» реалдуу убакта көрөсүз.",
+      "why-2-title":"5 эсе ылдамыраак","why-2-desc":"10 жөнөтүүчүгө телефон чалуунун ордуна — бир арыз. Сунуштар 24 саатта келет.",
+      "why-3-title":"Текшерилген жөнөтүүчүлөр","why-3-desc":"Ар бир жөнөтүүчү текшерилген: ОсОО/ИП, лицензиялар, мурдагы сделкалар боюнча пикирлер.",
+      "why-4-title":"ЭДО жана отчёттуулук","why-4-desc":"Бардык документтер — эсептер, келишимдер, акттар — бир жерде. Бухгалтерия үчүн даяр отчёт.",
+      "why-5-title":"Базар аналитикасы","why-5-desc":"Категориялар боюнча баалардын тарыхы, базардын динамикасы, жөнөтүүчүлөрдү салыштыруу. Маалыматтын негизинде чечим кабыл алыңыз.",
+      "why-6-title":"Жумалык 7 күн колдоо","why-6-desc":"Чоң кардарлар үчүн жеке менеджер. Орус жана кыргыз тилдеринде жардам.",
+      "price-title":"Жөнөтүүчүлөр үчүн тарифтер","price-subtitle":"Заказчылар үчүн — дайыма акысыз. Жөнөтүүчүлөр арыздарга жетүү үчүн төлөшөт.",
+      "plan1-name":"Старт","plan1-desc":"Башталгыч жөнөтүүчүлөр жана платформаны сыноо үчүн",
+      "plan1-f1":"Айына 30га чейин арыз","plan1-f2":"1 категория","plan1-f3":"Telegram + SMS билдирүү","plan1-f4":"Негизги баа аналитикасы","plan1-f5":"Листингде артыкчылыксыз","plan1-f6":"Жеке менеджерсиз",
+      "plan2-name":"Профи","plan2-desc":"Көпчүлүк жөнөтүүчүлөр үчүн оптималдуу тандоо",
+      "plan2-f1":"Чексиз арыздар","plan2-f2":"3 категорияга чейин","plan2-f3":"Листингде артыкчылык","plan2-f4":"Толук «баа коридору» аналитикасы","plan2-f5":"«Текшерилген жөнөтүүчү» белгиси","plan2-f6":"Иш убагында колдоо",
+      "plan3-name":"Корпоративдик","plan3-desc":"Чоң өндүрүүчүлөр жана оптчулар үчүн",
+      "plan3-f1":"«Профи» дин баардыгы","plan3-f2":"Бардык 10 категория","plan3-f3":"Листингдин чокусунда жарнама","plan3-f4":"Жеке менеджер","plan3-f5":"1С менен интеграция үчүн API","plan3-f6":"Команданы окутуу",
+      "per-month":"сом / айга","plan-cta":"Тандоо",
+      "price-trial":"🎁 Биринчи 30 күн — акысыз","price-trial-sub":"кайсы тарифте болбосун. Милдеттенмесиз жана картаны тиркөөсүз.",
+      "final-title":"Сатып алууну оптималдаштырууга даярсызбы?","final-desc":"Убакыт жана акчаны Кызмат.kg менен үнөмдөгөн 250+ жөнөтүүчүгө жана курулуш компанияларына кошулуңуз",
+      "final-cta1":"Арыз жайгаштыруу","final-cta2":"Жөнөтүүчү болуу",
+      "m-req-title":"Арыз жайгаштыруу","m-req-subtitle":"Жөнөтүүчүлөр сиздин арызды заматта алышат",
+      "m-sup-title":"Жөнөтүүчүнү каттоо","m-sup-subtitle":"30 күн акысыз сыноо мүмкүнчүлүгү",
+      "m-login-title":"Жеке кабинетке кирүү","m-login-subtitle":"Заказчылар жана жөнөтүүчүлөр үчүн",
+      "f-company":"Компаниянын аталышы","f-inn":"ИНН","f-contact":"Байланыш адамы","f-position":"Кызматы","f-category":"Материалдын категориясы","f-categories":"Иштеген категорияларыңыз","f-desc":"Так эмне керек (аталышы, көлөмү)","f-delivery":"Жеткирүү дареги","f-deadline":"Жеткирүү мөөнөтү","f-phone":"Телефон","f-email":"Email","f-password":"Сыр сөз","f-plan":"Тариф (сыноодон кийин)",
+      "plan-opt-1":"Старт — 4 900 сом/айга","plan-opt-2":"Профи — 14 900 сом/айга (популярдуу)","plan-opt-3":"Корпоративдик — 39 900 сом/айга",
+      "f-submit-req":"Тендерди жарыялоо →","f-note":"Заказчылар үчүн акысыз. Сунуштар 24 сааттын ичинде келет.",
+      "f-submit-sup":"Сыноо мүмкүнчүлүгүн алуу →","f-sup-note":"30 күн акысыз. Милдеттенмесиз жана картаны тиркөөсүз. Менеджер күн ичинде байланышат.",
+      "f-login-submit":"Кирүү →",
+      "footer-desc":"Кыргызстанда курулуш материалдарын сатып алуу үчүн B2B-аянтча. Бишкек, Ош, Ысык-Көл жана бардык өлкө.",
+      "footer-platform":"Платформа","footer-company":"Компания","footer-contact":"Байланыштар",
+      "footer-about":"Биз жөнүндө","footer-blog":"Блог","footer-terms":"Шарттар",
+      "footer-rights":"Бардык укуктар корголгон","footer-made":"Бишкекте жасалган 🇰🇬",
+      "success-title":"Арыз жарыяланды!","success-msg":"Жөнөтүүчүлөр сиздин арызды алышты. Сунуштар 24 сааттын ичинде Telegramга жана email'ге келет.",
+      "success-sup-title":"Арыз кабыл алынды!","success-sup-msg":"Биздин менеджер сыноо мезгилин активдештирүү үчүн күн ичинде сиз менен байланышат.",
+      "success-btn":"Жакшы"
+    }
+  };
+
+  function setLang(lang){
+    document.body.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-t]').forEach(el=>{
+      const key = el.getAttribute('data-t');
+      if(i18n[lang][key]) el.textContent = i18n[lang][key];
+    });
+    const h1 = document.querySelector('h1[data-t="hero-title"]');
+    if(h1 && i18n[lang]['hero-title-html']) h1.innerHTML = i18n[lang]['hero-title-html'];
+    document.querySelectorAll('.lang-switch button').forEach((b,i)=>{
+      b.classList.toggle('active', (lang==='ru'&&i===0)||(lang==='kg'&&i===1));
+    });
+  }
+
+  function switchTab(tab){
+    document.getElementById('steps-customer').style.display = tab==='customer' ? 'grid' : 'none';
+    document.getElementById('steps-supplier').style.display = tab==='supplier' ? 'grid' : 'none';
+    document.querySelectorAll('.how-tab').forEach((b,i)=>{
+      b.classList.toggle('active', (tab==='customer'&&i===0)||(tab==='supplier'&&i===1));
+    });
+  }
+
+  function openModal(type){
+    document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
+    document.getElementById('modal-'+type).classList.add('open');
+  }
+  function closeModal(){
+    document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m=>{
+    m.addEventListener('click',e=>{ if(e.target===m) closeModal(); });
+  });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+  function submitRequest(e){
+    e.preventDefault();
+    const lang = document.body.getAttribute('data-lang');
+    const modal = e.target.closest('.modal');
+    modal.innerHTML = `
+      <div class="success">
+        <div class="success-icon">✓</div>
+        <h3>${i18n[lang]['success-title']}</h3>
+        <p style="color:var(--muted);margin:14px 0 24px;font-size:15px">${i18n[lang]['success-msg']}</p>
+        <button class="btn btn-navy" onclick="closeModal();location.reload()">${i18n[lang]['success-btn']}</button>
+      </div>`;
+  }
+  function submitSupplier(e){
+    e.preventDefault();
+    const lang = document.body.getAttribute('data-lang');
+    const modal = e.target.closest('.modal');
+    modal.innerHTML = `
+      <div class="success">
+        <div class="success-icon">✓</div>
+        <h3>${i18n[lang]['success-sup-title']}</h3>
+        <p style="color:var(--muted);margin:14px 0 24px;font-size:15px">${i18n[lang]['success-sup-msg']}</p>
+        <button class="btn btn-navy" onclick="closeModal();location.reload()">${i18n[lang]['success-btn']}</button>
+      </div>`;
+  }
+</script>
+
+</body>
+</html>
