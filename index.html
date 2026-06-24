@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Кызмат.kg — B2B-площадка для закупок стройматериалов в Кыргызстане</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F2A4F'/%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-weight='800' font-size='38' fill='white' text-anchor='middle'%3EК%3C/text%3E%3Ccircle cx='52' cy='52' r='8' fill='%23DC2626' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
@@ -55,6 +56,29 @@
   .btn-outline:hover{border-color:var(--navy);color:var(--navy)}
   .btn-ghost{color:#475569}
   .btn-ghost:hover{background:var(--soft-2)}
+
+  /* ===== LOGIN HOVER DROPDOWN ===== */
+  .login-wrap{position:relative}
+  .login-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:.15s ease;z-index:60}
+  .login-wrap:hover .login-dropdown,.login-wrap:focus-within .login-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+  .login-dropdown::before{content:"";position:absolute;top:-8px;left:0;right:0;height:8px}
+  .login-dropdown button{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:7px;font-size:14px;font-weight:500;color:var(--ink);cursor:pointer;width:100%;text-align:left;background:none;transition:.1s}
+  .login-dropdown button:hover{background:var(--soft-2);color:var(--navy)}
+  .login-dropdown .ld-icon{width:32px;height:32px;border-radius:8px;background:var(--soft-2);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+
+  /* ===== ROLE SELECTION MODAL ===== */
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .role-btn{padding:28px 18px;border-radius:16px;border:2px solid var(--border);background:#fff;text-align:center;transition:.2s;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:inherit}
+  .role-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .role-btn .role-icon{font-size:38px;margin-bottom:6px;line-height:1}
+  .role-btn strong{font-family:'Unbounded';font-weight:700;font-size:16px;color:var(--ink);display:block;letter-spacing:-.01em}
+  .role-btn span{font-size:12px;color:var(--muted);font-weight:500;line-height:1.4}
+  .role-buy{border-color:#3B82F6}
+  .role-buy:hover{background:#EFF6FF;border-color:#1D4ED8}
+  .role-buy strong{color:#1D4ED8}
+  .role-sell{border-color:var(--green)}
+  .role-sell:hover{background:#ECFDF5;border-color:#047857}
+  .role-sell strong{color:#047857}
 
   /* ===== HERO ===== */
   .hero{padding:72px 0 64px;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,var(--soft) 100%)}
@@ -239,8 +263,16 @@
         <button class="active" onclick="setLang('ru')">RU</button>
         <button onclick="setLang('kg')">KG</button>
       </div>
-      <button class="btn btn-ghost" onclick="openModal('login')" data-t="nav-login">Войти</button>
-      <button class="btn btn-navy" onclick="openModal('supplier')" data-t="nav-cta">Регистрация</button>
+      <div class="login-wrap">
+        <button class="btn btn-ghost" data-t="nav-login">Войти</button>
+        <div class="login-dropdown">
+          <button onclick="openModal('login')">
+            <span class="ld-icon">👤</span>
+            <span data-t="nav-cabinet">Личный кабинет</span>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-navy" onclick="openModal('role')" data-t="nav-cta">Регистрация</button>
     </div>
   </div>
 </header>
@@ -585,6 +617,31 @@
   </div>
 </footer>
 
+<!-- ROLE SELECTION MODAL -->
+<div class="modal-overlay" id="modal-role">
+  <div class="modal" style="max-width:500px">
+    <div class="modal-head">
+      <div>
+        <h3 data-t="m-role-title">Регистрация</h3>
+        <p class="subtitle" data-t="m-role-subtitle">Выберите вашу роль. Заказчики размещают заявки бесплатно. Поставщики получают доступ к тендерам по подписке.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="role-grid">
+      <button class="role-btn role-buy" onclick="openModal('request')">
+        <span class="role-icon">🏗</span>
+        <strong data-t="role-buy">Покупать</strong>
+        <span data-t="role-buy-sub">Я закупаю стройматериалы</span>
+      </button>
+      <button class="role-btn role-sell" onclick="openModal('supplier')">
+        <span class="role-icon">📦</span>
+        <strong data-t="role-sell">Продавать</strong>
+        <span data-t="role-sell-sub">Я поставщик</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- REQUEST MODAL (Customer creates tender) -->
 <div class="modal-overlay" id="modal-request">
   <div class="modal">
@@ -746,7 +803,10 @@
   const i18n = {
     ru:{
       "logo-sub":"B2B-площадка",
-      "nav-categories":"Категории","nav-how":"Как работает","nav-pricing":"Тарифы","nav-why":"Почему мы","nav-login":"Войти","nav-cta":"Регистрация",
+      "nav-categories":"Категории","nav-how":"Как работает","nav-pricing":"Тарифы","nav-why":"Почему мы","nav-login":"Войти","nav-cta":"Регистрация","nav-cabinet":"Личный кабинет",
+      "m-role-title":"Регистрация","m-role-subtitle":"Выберите вашу роль. Заказчики размещают заявки бесплатно. Поставщики получают доступ к тендерам по подписке.",
+      "role-buy":"Покупать","role-buy-sub":"Я закупаю стройматериалы",
+      "role-sell":"Продавать","role-sell-sub":"Я поставщик",
       "hero-eyebrow":"B2B-площадка для строительного рынка КР",
       "hero-title-html":'Закупки <span class="accent">стройматериалов</span> без посредников',
       "hero-lead":"Размещайте тендеры — получайте предложения от проверенных поставщиков по всему Кыргызстану. Прозрачно, быстро, выгодно.",
@@ -809,7 +869,10 @@
     },
     kg:{
       "logo-sub":"B2B-аянтча",
-      "nav-categories":"Категориялар","nav-how":"Кантип иштейт","nav-pricing":"Тарифтер","nav-why":"Эмне үчүн биз","nav-login":"Кирүү","nav-cta":"Катталуу",
+      "nav-categories":"Категориялар","nav-how":"Кантип иштейт","nav-pricing":"Тарифтер","nav-why":"Эмне үчүн биз","nav-login":"Кирүү","nav-cta":"Катталуу","nav-cabinet":"Жеке кабинет",
+      "m-role-title":"Катталуу","m-role-subtitle":"Ролуңузду тандаңыз. Заказчылар арыздарды акысыз жайгаштырышат. Жеткирүүчүлөр тендерлерге жазылуу боюнча жетет.",
+      "role-buy":"Сатып алуу","role-buy-sub":"Мен курулуш материал сатып алам",
+      "role-sell":"Сатуу","role-sell-sub":"Мен жөнөтүүчүмүн",
       "hero-eyebrow":"КРнин курулуш базары үчүн B2B-аянтча",
       "hero-title-html":'<span class="accent">Курулуш материалдарын</span> ортомчусуз сатып алуу',
       "hero-lead":"Тендерлерди жайгаштырыңыз — Кыргызстандын текшерилген жөнөтүүчүлөрүнөн сунуштарды алыңыз. Ачык, тез, пайдалуу.",
