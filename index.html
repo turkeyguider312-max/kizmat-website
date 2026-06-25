@@ -985,7 +985,7 @@
     btn.disabled = true;
     btn.textContent = '...';
     try {
-      const r = await fetch('/api/register-customer', {
+      const r = await fetch('https://worker-production-d53d.up.railway.app/api/register-customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': 'kizmat-secret-2026' },
         body: JSON.stringify({
@@ -1024,7 +1024,7 @@
     btn.disabled = true;
     btn.textContent = '...';
     try {
-      const r = await fetch('/api/register-supplier', {
+      const r = await fetch('https://worker-production-d53d.up.railway.app/api/register-supplier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': 'kizmat-secret-2026' },
         body: JSON.stringify({
