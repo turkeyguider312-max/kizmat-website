@@ -143,6 +143,14 @@
   .cat h4{font-family:'Manrope';font-weight:700;font-size:14px;margin-bottom:4px;color:var(--ink)}
   .cat p{font-size:11px;color:var(--muted);font-weight:500}
 
+  /* ===== SUPPLIER CATEGORY CHECKBOXES ===== */
+  .sup-cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:6px}
+  .sup-cat-item{cursor:pointer;display:block}
+  .sup-cat-item input{display:none}
+  .sup-cat-box{display:block;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:500;color:var(--ink);background:#fff;transition:.15s;user-select:none}
+  .sup-cat-box:hover{border-color:var(--navy);background:var(--soft)}
+  .sup-cat-item input:checked + .sup-cat-box{border-color:var(--navy);background:var(--navy);color:#fff}
+
   /* ===== HOW IT WORKS ===== */
   .how-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:40px;background:var(--soft-2);padding:6px;border-radius:12px;max-width:480px;margin-left:auto;margin-right:auto}
   .how-tab{padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;color:var(--muted);transition:.15s;flex:1}
@@ -737,18 +745,19 @@
       </div>
       <div class="form-group">
         <label data-t="f-categories">Категории, в которых работаете</label>
-        <select required multiple size="4" style="height:auto">
-          <option data-t="cat-1">Цемент и бетон</option>
-          <option data-t="cat-2">Металл и арматура</option>
-          <option data-t="cat-3">Кирпич и блоки</option>
-          <option data-t="cat-4">Отделка</option>
-          <option data-t="cat-5">Кровля</option>
-          <option data-t="cat-6">Утепление</option>
-          <option data-t="cat-7">Сантехника</option>
-          <option data-t="cat-8">Электрика</option>
-          <option data-t="cat-9">Окна и двери</option>
-          <option data-t="cat-10">Инструменты</option>
-        </select>
+        <div class="sup-cat-grid" id="sup-cat-grid">
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Цемент и бетон" data-t="cat-1"><span class="sup-cat-box">Цемент и бетон</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Металл и арматура" data-t="cat-2"><span class="sup-cat-box">Металл и арматура</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Кирпич и блоки" data-t="cat-3"><span class="sup-cat-box">Кирпич и блоки</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Отделка" data-t="cat-4"><span class="sup-cat-box">Отделка</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Кровля" data-t="cat-5"><span class="sup-cat-box">Кровля</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Утепление" data-t="cat-6"><span class="sup-cat-box">Утепление</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Сантехника" data-t="cat-7"><span class="sup-cat-box">Сантехника</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Электрика" data-t="cat-8"><span class="sup-cat-box">Электрика</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Окна и двери" data-t="cat-9"><span class="sup-cat-box">Окна и двери</span></label>
+          <label class="sup-cat-item"><input type="checkbox" name="category" value="Инструменты" data-t="cat-10"><span class="sup-cat-box">Инструменты</span></label>
+        </div>
+        <p id="sup-cat-err" style="display:none;color:#dc2626;font-size:12px;margin-top:6px">Выберите хотя бы одну категорию</p>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -984,6 +993,10 @@
   function submitSupplier(e){
     e.preventDefault();
     const lang = document.body.getAttribute('data-lang');
+    const checked = e.target.querySelectorAll('input[name="category"]:checked');
+    const err = document.getElementById('sup-cat-err');
+    if(checked.length === 0){ err.style.display='block'; return; }
+    err.style.display='none';
     const modal = e.target.closest('.modal');
     modal.innerHTML = `
       <div class="success">
