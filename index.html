@@ -663,21 +663,21 @@
     <form onsubmit="submitRequest(event)">
       <div class="form-group">
         <label data-t="f-company">Название компании</label>
-        <input type="text" required placeholder="ОсОО «Стройдом»">
+        <input type="text" name="company" required placeholder="ОсОО «Стройдом»">
       </div>
       <div class="form-row">
         <div class="form-group">
           <label data-t="f-inn">ИНН</label>
-          <input type="text" placeholder="01234567890123">
+          <input type="text" name="inn" placeholder="01234567890123">
         </div>
         <div class="form-group">
           <label data-t="f-contact">Контактное лицо</label>
-          <input type="text" required placeholder="Бакыт Маматов">
+          <input type="text" name="contact" required placeholder="Бакыт Маматов">
         </div>
       </div>
       <div class="form-group">
         <label data-t="f-category">Категория материалов</label>
-        <select required>
+        <select name="category" required>
           <option data-t="cat-1">Цемент и бетон</option>
           <option data-t="cat-2">Металл и арматура</option>
           <option data-t="cat-3">Кирпич и блоки</option>
@@ -692,21 +692,21 @@
       </div>
       <div class="form-group">
         <label data-t="f-desc">Что именно нужно (наименование, объём)</label>
-        <textarea required placeholder="Цемент М500, 500 мешков по 50 кг. С доставкой на объект."></textarea>
+        <textarea name="description" required placeholder="Цемент М500, 500 мешков по 50 кг. С доставкой на объект."></textarea>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label data-t="f-delivery">Адрес доставки</label>
-          <input type="text" required placeholder="Бишкек, ул. Чуй 154">
+          <input type="text" name="delivery" required placeholder="Бишкек, ул. Чуй 154">
         </div>
         <div class="form-group">
           <label data-t="f-deadline">Срок поставки</label>
-          <input type="date" required>
+          <input type="date" name="deadline" required>
         </div>
       </div>
       <div class="form-group">
         <label data-t="f-phone">Телефон для связи</label>
-        <input type="tel" required placeholder="+996 700 ...">
+        <input type="tel" name="phone" required placeholder="+996 700 ...">
       </div>
       <button type="submit" class="form-submit" data-t="f-submit-req">Опубликовать тендер →</button>
       <p class="form-note" data-t="f-note">Бесплатно для заказчиков. Предложения придут в течение 24 часов.</p>
@@ -727,21 +727,21 @@
     <form onsubmit="submitSupplier(event)">
       <div class="form-group">
         <label data-t="f-company">Название компании</label>
-        <input type="text" required placeholder="ОсОО «КыргызЦемент»">
+        <input type="text" name="company" required placeholder="ОсОО «КыргызЦемент»">
       </div>
       <div class="form-row">
         <div class="form-group">
           <label data-t="f-inn">ИНН</label>
-          <input type="text" required placeholder="01234567890123">
+          <input type="text" name="inn" required placeholder="01234567890123">
         </div>
         <div class="form-group">
           <label data-t="f-contact">Контактное лицо</label>
-          <input type="text" required placeholder="Айбек Иманов">
+          <input type="text" name="contact" required placeholder="Айбек Иманов">
         </div>
       </div>
       <div class="form-group">
         <label data-t="f-position">Должность</label>
-        <input type="text" required placeholder="Менеджер по продажам">
+        <input type="text" name="position" required placeholder="Менеджер по продажам">
       </div>
       <div class="form-group">
         <label data-t="f-categories">Категории, в которых работаете</label>
@@ -762,16 +762,16 @@
       <div class="form-row">
         <div class="form-group">
           <label data-t="f-phone">Телефон</label>
-          <input type="tel" required placeholder="+996 700 ...">
+          <input type="tel" name="phone" required placeholder="+996 700 ...">
         </div>
         <div class="form-group">
           <label data-t="f-email">Email</label>
-          <input type="email" required placeholder="sales@company.kg">
+          <input type="email" name="email" required placeholder="sales@company.kg">
         </div>
       </div>
       <div class="form-group">
         <label data-t="f-plan">Тариф (после теста)</label>
-        <select required>
+        <select name="plan" required>
           <option data-t="plan-opt-1">Старт — 4 900 сом/мес</option>
           <option data-t="plan-opt-2" selected>Профи — 14 900 сом/мес (популярный)</option>
           <option data-t="plan-opt-3">Корпоративный — 39 900 сом/мес</option>
@@ -978,33 +978,79 @@
   });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 
-  function submitRequest(e){
+  async function submitRequest(e){
     e.preventDefault();
-    const lang = document.body.getAttribute('data-lang');
-    const modal = e.target.closest('.modal');
-    modal.innerHTML = `
-      <div class="success">
-        <div class="success-icon">✓</div>
-        <h3>${i18n[lang]['success-title']}</h3>
-        <p style="color:var(--muted);margin:14px 0 24px;font-size:15px">${i18n[lang]['success-msg']}</p>
-        <button class="btn btn-navy" onclick="closeModal();location.reload()">${i18n[lang]['success-btn']}</button>
-      </div>`;
+    const fd = new FormData(e.target);
+    const btn = e.target.querySelector('[type=submit]');
+    btn.disabled = true;
+    btn.textContent = '...';
+    try {
+      const r = await fetch('/api/register-customer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': 'kizmat-secret-2026' },
+        body: JSON.stringify({
+          company:     fd.get('company'),
+          inn:         fd.get('inn'),
+          contact:     fd.get('contact'),
+          category:    fd.get('category'),
+          description: fd.get('description'),
+          delivery:    fd.get('delivery'),
+          deadline:    fd.get('deadline'),
+          phone:       fd.get('phone'),
+        }),
+      });
+      const data = await r.json();
+      if (data.ok) {
+        window.location.href = '/dashboard/web-customer/' + data.requestId;
+      } else {
+        alert(data.error || 'Ошибка отправки');
+        btn.disabled = false;
+        btn.textContent = 'Опубликовать тендер →';
+      }
+    } catch(err) {
+      alert('Ошибка соединения');
+      btn.disabled = false;
+      btn.textContent = 'Опубликовать тендер →';
+    }
   }
-  function submitSupplier(e){
+  async function submitSupplier(e){
     e.preventDefault();
-    const lang = document.body.getAttribute('data-lang');
     const checked = e.target.querySelectorAll('input[name="category"]:checked');
     const err = document.getElementById('sup-cat-err');
     if(checked.length === 0){ err.style.display='block'; return; }
     err.style.display='none';
-    const modal = e.target.closest('.modal');
-    modal.innerHTML = `
-      <div class="success">
-        <div class="success-icon">✓</div>
-        <h3>${i18n[lang]['success-sup-title']}</h3>
-        <p style="color:var(--muted);margin:14px 0 24px;font-size:15px">${i18n[lang]['success-sup-msg']}</p>
-        <button class="btn btn-navy" onclick="closeModal();location.reload()">${i18n[lang]['success-btn']}</button>
-      </div>`;
+    const fd = new FormData(e.target);
+    const btn = e.target.querySelector('[type=submit]');
+    btn.disabled = true;
+    btn.textContent = '...';
+    try {
+      const r = await fetch('/api/register-supplier', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': 'kizmat-secret-2026' },
+        body: JSON.stringify({
+          company:    fd.get('company'),
+          inn:        fd.get('inn'),
+          contact:    fd.get('contact'),
+          position:   fd.get('position'),
+          categories: Array.from(checked).map(cb => cb.value),
+          phone:      fd.get('phone'),
+          email:      fd.get('email'),
+          plan:       fd.get('plan'),
+        }),
+      });
+      const data = await r.json();
+      if (data.ok) {
+        window.location.href = '/dashboard/web-supplier/' + data.supplierId;
+      } else {
+        alert(data.error || 'Ошибка отправки');
+        btn.disabled = false;
+        btn.textContent = 'Получить тестовый доступ →';
+      }
+    } catch(err) {
+      alert('Ошибка соединения');
+      btn.disabled = false;
+      btn.textContent = 'Получить тестовый доступ →';
+    }
   }
 </script>
 
